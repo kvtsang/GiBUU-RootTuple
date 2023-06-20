@@ -36,7 +36,8 @@ public:
     void AddEvent();
     void Write();
     void Close();
-    void AddParticle(int barcode, double px, double py, double pz, double e, double x, double y, double z);
+    void AddParticle(int barcode, double px, double py, double pz, double e, double x, double y, double z, \
+		     int ID, int gen, int parent1, int parent2, int parent3);
     void SetWeight(double weight);
 
     void SetDoubleBranch(std::string branchname, double *ptr);
@@ -57,7 +58,7 @@ private:
 
     // Branch variables
     Double_t m_weight;
-    std::vector<Int_t> m_barcode;
+    std::vector<Int_t> m_barcode, m_ID, m_gen, m_parent1, m_parent2, m_parent3;
     std::vector<Double_t> m_Px, m_Py, m_Pz, m_E;
 #if WITHPOS
     std::vector<Double_t> m_x, m_y, m_z;

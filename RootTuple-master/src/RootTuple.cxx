@@ -66,20 +66,25 @@ void RootTuple::AddEvent()
 
 #if WITHPOS
 	if ((int)m_Px.size() != (int)m_barcode.size() ||
-		(int)m_Py.size() != (int)m_barcode.size() ||
-		(int)m_Pz.size() != (int)m_barcode.size() ||
-                (int)m_E.size()  != (int)m_barcode.size() ||
-                (int)m_x.size()  != (int)m_barcode.size() ||
-                (int)m_y.size()  != (int)m_barcode.size() ||
-                (int)m_z.size()  != (int)m_barcode.size())
+	    (int)m_Py.size() != (int)m_barcode.size() ||
+	    (int)m_Pz.size() != (int)m_barcode.size() ||
+	    (int)m_E.size()  != (int)m_barcode.size() ||
+	    (int)m_x.size()  != (int)m_barcode.size() ||
+	    (int)m_y.size()  != (int)m_barcode.size() ||
+	    (int)m_z.size()  != (int)m_barcode.size() ||
+	    (int)m_ID.size() != (int)m_barcode.size() ||
+	    (int)m_gen.size()!= (int)m_barcode.size() ||
+	    (int)m_parent1.size()  != (int)m_barcode.size() ||
+	    (int)m_parent2.size()  != (int)m_barcode.size() ||
+	    (int)m_parent3.size()  != (int)m_barcode.size())
 #else
         if ((int)m_Px.size() != (int)m_barcode.size() ||
-		(int)m_Py.size() != (int)m_barcode.size() ||
-		(int)m_Pz.size() != (int)m_barcode.size() ||
-                (int)m_E.size()  != (int)m_barcode.size())
+	    (int)m_Py.size() != (int)m_barcode.size() ||
+	    (int)m_Pz.size() != (int)m_barcode.size() ||
+	    (int)m_E.size()  != (int)m_barcode.size())
 #endif
 
-		std::cout << "RootTuple:: Warning: Inconsistent vector sizes" << std::endl;
+	  std::cout << "RootTuple:: Warning: Inconsistent vector sizes" << std::endl;
 
 	// Add data to file and reset vectors
 	FillBranches();
@@ -105,20 +110,26 @@ void RootTuple::Close()
 		std::cout << "RootTuple:: Error: No ROOT file was opened" << std::endl;
 }//Close
 
-void RootTuple::AddParticle(int barcode, double px, double py, double pz, double e, double x, double y, double z)
+void RootTuple::AddParticle(int barcode, double px, double py, double pz, double e, double x, double y, double z, 
+			    int ID, int gen, int parent1, int parent2, int parent3)
 {
-	m_barcode.push_back(barcode);
-	m_Px.push_back(px);
-	m_Py.push_back(py);
-	m_Pz.push_back(pz);
-	m_E.push_back(e);
+  m_barcode.push_back(barcode);
+  m_Px.push_back(px);
+  m_Py.push_back(py);
+  m_Pz.push_back(pz);
+  m_E.push_back(e);
+  m_ID.push_back(ID);
+  m_gen.push_back(gen);
+  m_parent1.push_back(parent1);
+  m_parent2.push_back(parent2);
+  m_parent3.push_back(parent3);
 #if WITHPOS
-        m_x.push_back(x);
-        m_y.push_back(y);
-        m_z.push_back(z);
+  m_x.push_back(x);
+  m_y.push_back(y);
+  m_z.push_back(z);
 #endif
 
-}//AddParticle
+}//AddParticle  
 
 void RootTuple::SetWeight(double weight)
 {
@@ -169,6 +180,11 @@ void RootTuple::DeclareBranches()
 	m_tree->Branch("Py",        &m_Py);
 	m_tree->Branch("Pz",        &m_Pz);
 	m_tree->Branch("E",         &m_E);
+        m_tree->Branch("ID",        &m_ID);
+        m_tree->Branch("gen",       &m_gen);
+        m_tree->Branch("parent1",   &m_parent1);
+        m_tree->Branch("parent2",   &m_parent2);
+        m_tree->Branch("parent3",   &m_parent3);
 #if WITHPOS
         m_tree->Branch("x",         &m_x);
         m_tree->Branch("y",         &m_y);
@@ -189,6 +205,11 @@ void RootTuple::ClearVectors()
 	m_Py.clear();
 	m_Pz.clear();
 	m_E.clear();
+	m_ID.clear();
+	m_gen.clear();
+	m_parent1.clear();
+	m_parent2.clear();
+	m_parent3.clear();
 #if WITHPOS
         m_x.clear();
         m_y.clear();

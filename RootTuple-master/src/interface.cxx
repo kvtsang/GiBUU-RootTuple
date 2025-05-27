@@ -34,10 +34,20 @@ void rootclose()
     delete eventHandler;
 }//rootclose
 
-void rootaddparticle(int barcode, double px, double py, double pz, double e, double x, double y, double z, \
-		     int ID, int gen, int parent1, int parent2, int parent3)
+void rootaddparticle(
+    int barcode, int ID, int charge,
+    int UID, int history,
+    double px, double py, double pz, 
+    double e, double x, double y, double z,
+    int event0, int event1, int first_event)
 {
-  eventHandler->AddParticle(barcode, px, py, pz, e, x, y, z, ID, gen, parent1, parent2, parent3);
+    eventHandler->AddParticle(
+        barcode, ID, charge,
+        UID, history,
+        px, py, pz,
+        e, x, y, z,
+        event0, event1, first_event
+    );
 }//rootaddparticle 
 
 void rootaddevent(double weight)

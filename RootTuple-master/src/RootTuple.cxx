@@ -63,7 +63,6 @@ void RootTuple::Initialise()
 void RootTuple::AddEvent()
 {
 	// Check vectors sizes consistent
-
 #if WITHPOS
 	if ((int)m_Px.size() != (int)m_barcode.size() ||
 	    (int)m_Py.size() != (int)m_barcode.size() ||
@@ -72,11 +71,7 @@ void RootTuple::AddEvent()
 	    (int)m_x.size()  != (int)m_barcode.size() ||
 	    (int)m_y.size()  != (int)m_barcode.size() ||
 	    (int)m_z.size()  != (int)m_barcode.size() ||
-	    (int)m_ID.size() != (int)m_barcode.size() ||
-	    (int)m_gen.size()!= (int)m_barcode.size() ||
-	    (int)m_parent1.size()  != (int)m_barcode.size() ||
-	    (int)m_parent2.size()  != (int)m_barcode.size() ||
-	    (int)m_parent3.size()  != (int)m_barcode.size())
+	    (int)m_ID.size() != (int)m_barcode.size())
 #else
         if ((int)m_Px.size() != (int)m_barcode.size() ||
 	    (int)m_Py.size() != (int)m_barcode.size() ||
@@ -110,8 +105,12 @@ void RootTuple::Close()
 		std::cout << "RootTuple:: Error: No ROOT file was opened" << std::endl;
 }//Close
 
-void RootTuple::AddParticle(int barcode, double px, double py, double pz, double e, double x, double y, double z, 
-			    int ID, int gen, int parent1, int parent2, int parent3)
+void RootTuple::AddParticle(
+    int barcode, int ID, int charge,
+    int UID, int history,
+    double px, double py, double pz, 
+    double e, double x, double y, double z,
+    int event0, int event1, int first_event)
 {
   m_barcode.push_back(barcode);
   m_Px.push_back(px);
@@ -119,10 +118,12 @@ void RootTuple::AddParticle(int barcode, double px, double py, double pz, double
   m_Pz.push_back(pz);
   m_E.push_back(e);
   m_ID.push_back(ID);
-  m_gen.push_back(gen);
-  m_parent1.push_back(parent1);
-  m_parent2.push_back(parent2);
-  m_parent3.push_back(parent3);
+  m_charge.push_back(charge);
+  m_UID.push_back(UID);
+  m_history.push_back(history);
+  m_event0.push_back(event0);
+  m_event1.push_back(event1);
+  m_first_event.push_back(first_event);
 #if WITHPOS
   m_x.push_back(x);
   m_y.push_back(y);
@@ -180,15 +181,17 @@ void RootTuple::DeclareBranches()
 	m_tree->Branch("Py",        &m_Py);
 	m_tree->Branch("Pz",        &m_Pz);
 	m_tree->Branch("E",         &m_E);
-        m_tree->Branch("ID",        &m_ID);
-        m_tree->Branch("gen",       &m_gen);
-        m_tree->Branch("parent1",   &m_parent1);
-        m_tree->Branch("parent2",   &m_parent2);
-        m_tree->Branch("parent3",   &m_parent3);
-#if WITHPOS
-        m_tree->Branch("x",         &m_x);
-        m_tree->Branch("y",         &m_y);
-        m_tree->Branch("z",         &m_z);
+  m_tree->Branch("ID",        &m_ID);
+  m_tree->Branch("charge",    &m_charge);
+  m_tree->Branch("UID",       &m_UID);
+  m_tree->Branch("history",   &m_history);
+  m_tree->Branch("event0",    &m_event0);
+  m_tree->Branch("event1",    &m_event1);
+  m_tree->Branch("first_event",&m_first_event);
+  #if WITHPOS
+  m_tree->Branch("x",         &m_x);
+  m_tree->Branch("y",         &m_y);
+  m_tree->Branch("z",         &m_z);
 #endif
 }//DeclareBranches
 
@@ -206,13 +209,15 @@ void RootTuple::ClearVectors()
 	m_Pz.clear();
 	m_E.clear();
 	m_ID.clear();
-	m_gen.clear();
-	m_parent1.clear();
-	m_parent2.clear();
-	m_parent3.clear();
+  m_charge.clear();
+  m_UID.clear();
+  m_history.clear();
+  m_event0.clear();
+  m_event1.clear();
+  m_first_event.clear();
 #if WITHPOS
-        m_x.clear();
-        m_y.clear();
-        m_z.clear();
+  m_x.clear();
+  m_y.clear();
+  m_z.clear();
 #endif
 }//ClearVectors

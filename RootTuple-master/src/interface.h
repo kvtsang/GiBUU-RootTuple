@@ -22,8 +22,13 @@ void rootinit(const char *filename, int lfilename);
 void rootwrite();
 void rootclose();
 
-void rootaddparticle(int barcode, double px, double py, double pz, double e, double x, double y, double z,\
-                     int ID, int gen, int parent1, int parent2, int parent3);
+void rootaddparticle(
+    int barcode, int ID, int charge,
+    int UID, int history,
+    double px, double py, double pz, 
+    double e, double x, double y, double z,
+    int event0, int event1, int first_event
+);
 void rootaddevent(double weight);
 
 void rootadddouble(double *ptr, const char* branchname, int lbranchname);
@@ -46,9 +51,22 @@ extern "C" {
     void FortranCInterface_GLOBAL(rootclose,ROOTCLOSE)()
     {rootclose();};
 
-  void FortranCInterface_GLOBAL(rootaddparticle,ROOTADDPARTICLE)(int *barcode, double *px, double *py, double *pz, double *e, double *x, double *y, double *z, \
-								 int *ID, int *gen, int *parent1, int *parent2, int *parent3)
-  {rootaddparticle(*barcode, *px, *py, *pz, *e, *x, *y, *z, *ID, *gen, *parent1, *parent2, *parent3);};
+    void FortranCInterface_GLOBAL(rootaddparticle,ROOTADDPARTICLE)(
+        int *barcode, int *ID, int *charge,
+        int *UID, int *history, 
+        double *px, double *py, double *pz,
+        double *e, double *x, double *y, double *z,
+        int *event0, int *event1, int *first_event)
+    {
+      rootaddparticle(
+          *barcode, *ID, *charge,
+          *UID, *history, 
+          *px, *py, *pz,
+          *e, *x, *y, *z,
+          *event0, *event1, *first_event
+      );
+    };
+
     void FortranCInterface_GLOBAL(rootaddevent,ROOTADDEVENT)(double *weight)
     {rootaddevent(*weight);};
 

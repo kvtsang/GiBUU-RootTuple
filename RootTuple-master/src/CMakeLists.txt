@@ -7,7 +7,7 @@ include (FortranCInterface)
 FortranCInterface_VERIFY(CXX)
 FortranCInterface_HEADER(FC_namemangling.h)
 
-set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11") # [GiBUU]
+set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17") # [GiBUU]
 
 # Include binary tree in include path (to find name mangling macros)
 include_directories (${CMAKE_BINARY_DIR}/src)

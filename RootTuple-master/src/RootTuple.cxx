@@ -66,20 +66,20 @@ void RootTuple::AddEvent()
 
 #if WITHPOS
 	if ((int)m_Px.size() != (int)m_barcode.size() ||
-		(int)m_Py.size() != (int)m_barcode.size() ||
-		(int)m_Pz.size() != (int)m_barcode.size() ||
-                (int)m_E.size()  != (int)m_barcode.size() ||
-                (int)m_x.size()  != (int)m_barcode.size() ||
-                (int)m_y.size()  != (int)m_barcode.size() ||
-                (int)m_z.size()  != (int)m_barcode.size())
+	    (int)m_Py.size() != (int)m_barcode.size() ||
+	    (int)m_Pz.size() != (int)m_barcode.size() ||
+	    (int)m_E.size()  != (int)m_barcode.size() ||
+	    (int)m_x.size()  != (int)m_barcode.size() ||
+	    (int)m_y.size()  != (int)m_barcode.size() ||
+	    (int)m_z.size()  != (int)m_barcode.size())
 #else
         if ((int)m_Px.size() != (int)m_barcode.size() ||
-		(int)m_Py.size() != (int)m_barcode.size() ||
-		(int)m_Pz.size() != (int)m_barcode.size() ||
-                (int)m_E.size()  != (int)m_barcode.size())
+	    (int)m_Py.size() != (int)m_barcode.size() ||
+	    (int)m_Pz.size() != (int)m_barcode.size() ||
+	    (int)m_E.size()  != (int)m_barcode.size())
 #endif
 
-		std::cout << "RootTuple:: Warning: Inconsistent vector sizes" << std::endl;
+	  std::cout << "RootTuple:: Warning: Inconsistent vector sizes" << std::endl;
 
 	// Add data to file and reset vectors
 	FillBranches();

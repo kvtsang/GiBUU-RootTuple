@@ -20,10 +20,6 @@
 #include <TFile.h>
 #include <TTree.h>
 
-#ifndef WITHPOS
-#define WITHPOS 0
-#endif
-
 class RootTuple{
 public:
     // Constructors and destructors
@@ -37,11 +33,13 @@ public:
     void Write();
     void Close();
     void AddParticle(
-        int barcode, int ID, int charge,
-        int UID, int history,
+        int barcode, int ID, int UID, int history,
+        int charge, double mass,
         double px, double py, double pz, 
         double e, double x, double y, double z,
-        int event0, int event1, int first_event
+        int event0, int event1, int first_event,
+        double last_coll_time, double prod_time, double form_time,
+        double scale_cs, double offshell_par
     );
     void SetWeight(double weight);
 
@@ -64,11 +62,14 @@ private:
     // Branch variables
     Double_t m_weight;
     std::vector<Int_t> m_barcode, m_ID, m_charge, m_UID, m_history;
-    std::vector<Double_t> m_Px, m_Py, m_Pz, m_E;
+    std::vector<Float_t> m_Px, m_Py, m_Pz, m_E;
     std::vector<Int_t> m_event0, m_event1, m_first_event;
-#if WITHPOS
-    std::vector<Double_t> m_x, m_y, m_z;
-#endif
+
+    // Additional information
+    std::vector<Float_t> m_mass;
+    std::vector<Float_t> m_last_coll_time, m_prod_time, m_form_time;
+    std::vector<Float_t> m_scale_cs, m_offshell_par;
+    std::vector<Float_t> m_x, m_y, m_z;
 };
 
 #endif

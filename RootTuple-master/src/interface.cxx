@@ -35,18 +35,22 @@ void rootclose()
 }//rootclose
 
 void rootaddparticle(
-    int barcode, int ID, int charge,
-    int UID, int history,
+    int barcode, int ID, int UID, int history,
+    int charge, double mass,
     double px, double py, double pz, 
     double e, double x, double y, double z,
-    int event0, int event1, int first_event)
+    int event0, int event1, int first_event,
+    double last_coll_time, double prod_time, double form_time,
+    double scale_cs, double offshell_par)
 {
     eventHandler->AddParticle(
-        barcode, ID, charge,
-        UID, history,
-        px, py, pz,
+        barcode, ID, UID, history,
+        charge, mass,
+        px, py, pz, 
         e, x, y, z,
-        event0, event1, first_event
+        event0, event1, first_event,
+        last_coll_time, prod_time, form_time,
+        scale_cs, offshell_par
     );
 }//rootaddparticle 
 
